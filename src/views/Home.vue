@@ -4,7 +4,7 @@
       <div class="column"></div>
       <div class="column">
         <h1 class="title has-text-centered">Follow Team</h1>
-        <div class="has-text-centered">Following all the channels in the <b>{{team}}</b></div>
+        <div class="has-text-centered">Following all the channels in the <b>{{teamName}}</b></div>
         <br>
         <h2 class="title is-5 has-text-centered">
           {{message}}
@@ -25,7 +25,7 @@
           <br>
           <div class="field">
             <label class="checkbox">
-              <input type="checkbox" id="checkbox" v-model="checked">
+              <input type="checkbox" id="checkbox" v-model="notifications">
               Notifications
             </label>
           </div>
@@ -88,14 +88,15 @@ export default {
         team = process.env.VUE_APP_DEFAULT_TEAM;
       }
     } else {
-      this.$cookies.set('team', team, 60 * 60);
+      this.$cookies.set('team', team, 60 * 10);
     }
     return {
       team,
+      teamList: [],
+      teamName: team,
       accessToken,
       message: undefined,
-      checked: true,
-      teamList: [],
+      notifications: true,
       loading: false,
     };
   },
@@ -110,6 +111,7 @@ export default {
         },
       })
         .then(value => value.json().then((teamData) => {
+          this.teamName = teamData.display_name;
           team = teamData.users;
         }))
         .catch(reason => console.log(reason));
@@ -144,7 +146,7 @@ export default {
 
       this.teamList.forEach(async (element) => {
         const id = element._id;
-        await twitchClient.users.followChannel(userId, id, this.checked);
+        await twitchClient.users.followChannel(userId, id, this.notifications);
         await this.sleep(500);
       });
       this.message = 'Following is complete';
