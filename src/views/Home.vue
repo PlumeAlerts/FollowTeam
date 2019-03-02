@@ -9,50 +9,40 @@
         <h2 class="title is-5 has-text-centered">
           {{message}}
         </h2>
-        <div v-if="!message">
-          <div v-if="loading">
-            Loading channels....
+        <div v-if="accessToken">
+          <div v-if="!message">
+            <div v-if="loading">
+              <h4>Loading channels...</h4>
+            </div>
+            <div v-else-if="teamList.length === 0">
+              <h4>You are currently following all channels in this team.</h4>
+            </div>
+            <div v-else class="box" v-bind:key="item.id" v-for="item in teamList">
+              <Channel :item="item"></Channel>
+            </div>
           </div>
-          <div v-if="!loading && teamList.length === 0">
-            You are currently following all channels in this team.
+          <br>
+          <br>
+          <div class="field">
+            <label class="checkbox">
+              <input type="checkbox" id="checkbox" v-model="checked">
+              Notifications
+            </label>
           </div>
-          <div class="box" v-bind:key="item.id" v-for="item in teamList">
-            <article class="media" style="border: 1px;">
-              <figure class="media-left">
-                <p class="image is-64x64">
-                  <img :src="item.logo">
-                </p>
-              </figure>
-              <div class="media-content">
-                <div class="content">
-                  <p>
-                    <strong>{{item.display_name}}</strong>
-                    <br>
-                    {{item.status}}
-                  </p>
-                </div>
-              </div>
-            </article>
+          <div class="field">
+            <div class="control">
+              <button v-on:click="follow" :disabled="message"
+                      class="button is-large is-fullwidth is-primary">
+                Follow All
+              </button>
+            </div>
           </div>
         </div>
-        <br>
-        <br>
-        <div v-if="accessToken" class="field">
-          <label class="checkbox">
-            <input type="checkbox" id="checkbox" v-model="checked">
-            Notifications
-          </label>
-        </div>
-        <div class="field">
-          <div class="control">
-            <button v-if="accessToken" v-on:click="follow" :disabled="accessToken && message"
-                    class="button is-fullwidth is-primary">
-              Follow All
-            </button>
-            <button v-else v-on:click="login" class="button is-large is-fullwidth is-link">
-              Login
-            </button>
-          </div>
+        <div v-else>
+          <h4>Please login</h4>
+          <button v-on:click="login" class="button is-large is-fullwidth is-link">
+            Login
+          </button>
         </div>
       </div>
       <div class="column"></div>
@@ -70,10 +60,12 @@
 
 <script>
 import TwitchClient from 'twitch';
+import Channel from './components/Channel.vue';
 
 let twitchClient;
 export default {
   name: 'home',
+  components: { Channel },
   data() {
     let { team } = this.$route.query;
     const { hash } = this.$route;
