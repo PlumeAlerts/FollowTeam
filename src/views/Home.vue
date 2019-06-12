@@ -49,10 +49,10 @@
     </div>
     <footer class="footer">
       <div class="content has-text-centered">
-        <p>
-          <strong>Created by lclc98</strong> source code available at <a
-          href="https://github.com/PlumeAlerts/FollowTeam">here</a>.
-        </p>
+        <strong>Created by lclc98</strong>
+      </div>
+      <div class="content has-text-centered">
+        Source code available at <a href="https://github.com/PlumeAlerts/FollowTeam">here</a>.
       </div>
     </footer>
   </div>
@@ -116,18 +116,18 @@ export default {
         }))
         .catch(reason => console.log(reason));
 
-      twitchClient = TwitchClient.withCredentials(process.env.VUE_APP_CLIENT_ID, this.accessToken);
+      twitchClient = await TwitchClient.withCredentials(process.env.VUE_APP_CLIENT_ID, this.accessToken);
       const tokenInfo = await twitchClient.getTokenInfo();
       const { userId } = tokenInfo;
 
+      const users = await twitchClient.helix.users.getFollows({ user: userId }).getAll();
       team.forEach(async (element) => {
         const id = element._id;
         if (id === userId) return;
-        const followed = await twitchClient.users.getFollowedChannel(userId, id);
-        if (followed == null) {
+
+        if (!users.some(e => e.followedUserId === id)) {
           this.teamList.push(element);
         }
-        await this.sleep(500);
       });
       this.loading = false;
     }
@@ -140,7 +140,6 @@ export default {
       if (this.message !== undefined) return;
       this.message = 'Following in progress';
 
-      twitchClient = TwitchClient.withCredentials(process.env.VUE_APP_CLIENT_ID, this.accessToken);
       const tokenInfo = await twitchClient.getTokenInfo();
       const { userId } = tokenInfo;
 

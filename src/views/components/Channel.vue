@@ -1,17 +1,13 @@
 <template>
-  <article class="media" style="border: 1px;">
-    <figure class="media-left">
-      <p class="image is-64x64">
+  <article class="level" style="border: 1px;">
+    <div class="level-left">
+      <div class="level-item">
+        <figure class="image is-64x64">
         <img :src="item.logo">
-      </p>
-    </figure>
-    <div class="media-content">
-      <div class="content">
-        <p>
-          <strong>{{item.display_name}}</strong>
-          <br>
-          {{item.status}}
-        </p>
+        </figure>
+      </div>
+      <div class="level-item">
+        <h1 class="title">{{item.display_name}}</h1>
       </div>
     </div>
   </article>
@@ -20,9 +16,7 @@
 <script>
 export default {
   name: 'Channel',
-  props: {
-    item: Object,
-  },
+  props: ['item'],
 };
 </script>
 
