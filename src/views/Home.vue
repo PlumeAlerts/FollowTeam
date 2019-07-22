@@ -1,10 +1,8 @@
 <template>
-  <div class="content">
-    <div class="columns">
-      <div class="column"></div>
-      <div class="column">
+  <div class="section">
+    <div class="columns is-centered">
+      <div class="column is-one-third">
         <h1 class="title has-text-centered">Follow Team</h1>
-        <div class="has-text-centered">Following all the channels in the <b>{{teamName}}</b></div>
         <br>
         <h2 class="title is-5 has-text-centered">
           {{message}}
@@ -17,8 +15,16 @@
             <div v-else-if="teamList.length === 0">
               <h4>You are currently following all channels in this team.</h4>
             </div>
-            <div v-else class="box" v-bind:key="item.id" v-for="item in teamList">
-              <Channel :item="item"></Channel>
+            <div v-else>
+              <h4 class="title is-4">You are currently not following the current users:</h4>
+              <h4 class="subtitle is-4">Click to not follow the user</h4>
+              <div class="columns is-centered">
+                <div class="column is-two-thirds">
+                  <template v-for="item in teamList" >
+                    <Channel v-bind:key="item.id" :item="item"></Channel>
+                  </template>
+                </div>
+              </div>
             </div>
           </div>
           <br>
@@ -26,7 +32,7 @@
           <div class="field">
             <label class="checkbox">
               <input type="checkbox" id="checkbox" v-model="notifications">
-              Notifications
+              Receive notification from channel
             </label>
           </div>
           <div class="field">
@@ -45,9 +51,8 @@
           </button>
         </div>
       </div>
-      <div class="column"></div>
     </div>
-    <footer class="footer">
+    <footer class="box">
       <div class="content has-text-centered">
         <strong>Created by lclc98</strong>
       </div>
@@ -105,18 +110,19 @@ export default {
           this.teamName = teamData.display_name;
           team = teamData.users;
         }))
-        .catch(reason => console.log(reason));
+        .catch(reason => this.message = 'Failed to fetch the team.');
 
       twitchClient = await TwitchClient.withCredentials(process.env.VUE_APP_CLIENT_ID, this.accessToken);
       const tokenInfo = await twitchClient.getTokenInfo();
       const { userId } = tokenInfo;
 
-      const users = await twitchClient.helix.users.getFollows({ user: userId }).getAll();
+      const users = await twitchClient.helix.users.getFollowsPaginated({ user: userId }).getAll();
       team.forEach(async (element) => {
         const id = element._id;
         if (id === userId) return;
 
         if (!users.some(e => e.followedUserId === id)) {
+          element.follow = true;
           this.teamList.push(element);
         }
       });
@@ -124,9 +130,6 @@ export default {
     }
   },
   methods: {
-    async sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    },
     async follow() {
       if (this.message !== undefined) return;
       this.message = 'Following in progress';
@@ -135,9 +138,10 @@ export default {
       const { userId } = tokenInfo;
 
       this.teamList.forEach(async (element) => {
-        const id = element._id;
-        await twitchClient.users.followChannel(userId, id, this.notifications);
-        await this.sleep(500);
+        if (element.follow) {
+          const id = element._id;
+          await twitchClient.kraken.users.followChannel(userId, id, this.notifications);
+        }
       });
       this.message = 'Following is complete';
     },

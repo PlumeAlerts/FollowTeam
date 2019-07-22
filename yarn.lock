@@ -8596,11 +8596,6 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
-vue-cookies@^1.5.13:
-  version "1.5.13"
-  resolved "https://registry.yarnpkg.com/vue-cookies/-/vue-cookies-1.5.13.tgz#b1ca79a2663bf9a4f36982557011cab5ee2196c0"
-  integrity sha512-8pjpXnvbNWx1Lft0t3MJnW+ylv0Wa2Tb6Ch617u/pQah3+SfXUZZdkh3EL3bSpe/Sw2Wdw3+DhycgQsKANSxXg==
-
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
@@ -8640,6 +8635,11 @@ vue-loader@^15.7.0:
     loader-utils "^1.1.0"
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
+
+vue-responsive-text@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/vue-responsive-text/-/vue-responsive-text-0.1.4.tgz#b075a0118aac3b47e8d7d93246f989cb060fe135"
+  integrity sha512-mfNilBpm/UahddnFJKCqQRaj3PW5fvdQZuCoxZkfSyPFOOCRPBx6C0hUuc+5Fk1ZsX3uOQVIY1MNpE8c1n4wzQ==
 
 vue-router@^3.0.7:
   version "3.0.7"
