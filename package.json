@@ -9,20 +9,19 @@
   },
   "dependencies": {
     "bulma": "git://github.com/jgthms/bulma#ff17a85faa",
-    "twitch": "^3.0.0-pre.4",
+    "twitch": "^3.0.0",
     "vue": "^2.6.10",
-    "vue-cookies": "^1.5.13",
-    "vue-router": "^3.0.6"
+    "vue-router": "^3.0.7"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
-    "@vue/eslint-config-airbnb": "^4.0.0",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.16.0",
-    "eslint-plugin-vue": "^5.2.2",
-    "sass": "^1.21.0",
+    "@vue/cli-plugin-babel": "^3.9.2",
+    "@vue/cli-plugin-eslint": "^3.9.2",
+    "@vue/cli-service": "^3.9.3",
+    "@vue/eslint-config-airbnb": "^4.0.1",
+    "babel-eslint": "^10.0.2",
+    "eslint": "^6.1.0",
+    "eslint-plugin-vue": "^5.2.3",
+    "sass": "^1.22.7",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.10"
   }

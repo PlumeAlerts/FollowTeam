@@ -67,7 +67,6 @@ export default {
   name: 'home',
   components: { Channel },
   data() {
-    let { team } = this.$route.query;
     const { hash } = this.$route;
 
     const vars = hash.substring(1, hash.length).split('&');
@@ -81,15 +80,7 @@ export default {
       }
     });
     const accessToken = hashbang.access_token;
-    if (team === undefined) {
-      if (this.$cookies.isKey('team')) {
-        team = this.$cookies.get('team');
-      } else {
-        team = process.env.VUE_APP_DEFAULT_TEAM;
-      }
-    } else {
-      this.$cookies.set('team', team, 60 * 10);
-    }
+    const team = process.env.VUE_APP_TEAM;
     return {
       team,
       teamList: [],
