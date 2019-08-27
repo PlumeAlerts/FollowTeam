@@ -9,7 +9,7 @@
         </div>
         <div class="level-item">
           <VueResponsiveText>
-            <b>{{item.display_name}}</b>
+            <b>{{item.displayName}}</b>
           </VueResponsiveText>
         </div>
       </div>
@@ -18,20 +18,20 @@
 </template>
 
 <script>
-    import VueResponsiveText from 'vue-responsive-text';
+import VueResponsiveText from 'vue-responsive-text';
 
-    export default {
-        name: 'Channel',
-        props: ['item'],
-        components: {
-            VueResponsiveText,
-        },
-        methods: {
-            select() {
-                this.item.follow = !this.item.follow;
-            },
-        },
-    };
+export default {
+  name: 'Channel',
+  props: ['item'],
+  components: {
+    VueResponsiveText,
+  },
+  methods: {
+    select() {
+      this.item.follow = !this.item.follow;
+    },
+  },
+};
 </script>
 
 <style scoped>

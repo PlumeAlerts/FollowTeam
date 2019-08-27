@@ -98,32 +98,29 @@ export default {
   },
   async mounted() {
     if (this.accessToken) {
+      const clientId = process.env.VUE_APP_CLIENT_ID;
       this.loading = true;
-      let team = [];
-      await fetch(`https://api.twitch.tv/kraken/teams/${this.team}`, {
-        headers: {
-          'Client-Id': process.env.VUE_APP_CLIENT_ID,
-          accept: 'application/vnd.twitchtv.v5+json',
-        },
-      })
-        .then(value => value.json().then((teamData) => {
-          this.teamName = teamData.display_name;
-          team = teamData.users;
-        }))
-        .catch(reason => this.message = 'Failed to fetch the team.');
+      twitchClient = await TwitchClient.withCredentials(clientId, this.accessToken);
+      const teamData = await twitchClient.kraken.teams.getTeamByName('unitetv');
+      const team = await teamData.getUsers();
 
-      twitchClient = await TwitchClient.withCredentials(process.env.VUE_APP_CLIENT_ID, this.accessToken);
       const tokenInfo = await twitchClient.getTokenInfo();
       const { userId } = tokenInfo;
 
       const users = await twitchClient.helix.users.getFollowsPaginated({ user: userId }).getAll();
-      team.forEach(async (element) => {
-        const id = element._id;
+      team.forEach(async (value) => {
+        const { id } = value;
         if (id === userId) return;
 
         if (!users.some(e => e.followedUserId === id)) {
-          element.follow = true;
-          this.teamList.push(element);
+          const data = {
+            userId: id,
+            username: value.name,
+            displayName: value.displayName,
+            logo: value.logoUrl,
+            follow: true,
+          };
+          this.teamList.push(data);
         }
       });
       this.loading = false;
@@ -137,10 +134,9 @@ export default {
       const tokenInfo = await twitchClient.getTokenInfo();
       const { userId } = tokenInfo;
 
-      this.teamList.forEach(async (element) => {
-        if (element.follow) {
-          const id = element._id;
-          await twitchClient.kraken.users.followChannel(userId, id, this.notifications);
+      this.teamList.forEach(async (value) => {
+        if (value.follow) {
+          await twitchClient.kraken.users.followChannel(userId, value.id, this.notifications);
         }
       });
       this.message = 'Following is complete';
