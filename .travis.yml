@@ -15,6 +15,7 @@ deploy:
   local_dir: dist/
   github_token: $GITHUB_TOKEN
   keep_history: true
+  fqdn: followteam.plumealerts.com
   on:
     branch: master
 cache:
