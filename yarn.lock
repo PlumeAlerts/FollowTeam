@@ -7971,10 +7971,10 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha1-WuaBd/GS1EViadEIr6k/+HQ/T2Q=
 
-twitch@^3.4.3:
-  version "3.4.3"
-  resolved "https://registry.yarnpkg.com/twitch/-/twitch-3.4.3.tgz#d55fece061a81b465c0c8eabe7b6c18c8ecafb05"
-  integrity sha512-2VNBeeYl8gYbL0ntBATaRmGMfxMiWKFOxdoIbChdItbQz1La4DHedOM3amemPEYHpg4ljtrHJf/TC0xcNwsF+A==
+twitch@^3.4.4:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/twitch/-/twitch-3.4.4.tgz#291e0b29bf2c7aa9f6192264ef91d630c917ee99"
+  integrity sha512-+SEn5ABA+oaozbJexmB3fp8CS24cKWSMwHicSQK5pa65RvnV4HSz9bbVKedmyWb4ILbxdG0jGJCsN/mPHKOOgw==
   dependencies:
     "@types/qs" "^6.5.1"
     fetch-ponyfill "^6.0.2"
