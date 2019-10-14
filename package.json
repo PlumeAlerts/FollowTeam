@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "bulma": "git://github.com/jgthms/bulma#e63641d",
-    "twitch": "^3.5.0",
+    "twitch": "^3.5.5",
     "vue": "^2.6.10",
     "vue-responsive-text": "^0.1.4",
     "vue-router": "^3.1.3"
