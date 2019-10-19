@@ -100,11 +100,11 @@ export default {
     if (this.accessToken) {
       const clientId = process.env.VUE_APP_CLIENT_ID;
       this.loading = true;
-      twitchClient = await TwitchClient.withCredentials(clientId, this.accessToken);
+      twitchClient = await TwitchClient.withCredentials(clientId, this.accessToken, ['user_follows_edit']);
       const teamData = await twitchClient.kraken.teams.getTeamByName('unitetv');
       const team = await teamData.getUsers();
 
-      const tokenInfo = await twitchClient.getTokenInfo();
+      const tokenInfo = await TwitchClient.getTokenInfo(undefined, this.accessToken);
       const { userId } = tokenInfo;
 
       const users = await twitchClient.helix.users.getFollowsPaginated({ user: userId }).getAll();
