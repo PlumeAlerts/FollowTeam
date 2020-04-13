@@ -8,7 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "bulma": "^0.8.1",
+    "bulma": "^0.8.2",
     "twitch": "^4.0.9",
     "vue": "^2.6.11",
     "vue-responsive-text": "^0.1.4",
